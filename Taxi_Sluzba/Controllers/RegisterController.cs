@@ -7,12 +7,18 @@ using Taxi_Sluzba.Models;
 
 namespace Taxi_Sluzba.Controllers
 {
-    public class HomeController : Controller
+    public class RegisterController : Controller
     {
-        // GET: Home
+        // GET: Register
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult RegisterUser(Musterija musterija)
+        {
+            Response.Write(musterija.UserName);
+            return View("Error");
         }
     }
 }

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Taxi_Sluzba.Models;
 
 namespace Taxi_Sluzba.Controllers
 {
-    public class HomeController : Controller
+    public class MainController : Controller
     {
-        // GET: Home
+        // GET: Main
         public ActionResult Index()
+        {
+            return View();
+        }
+        public ActionResult Welcome()
         {
             return View();
         }

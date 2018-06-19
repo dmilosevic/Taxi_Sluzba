@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Login</h2>
+
+@Html.ActionLink("Reload i guess", "Login");
+
+<form method="post" action="Login/CheckLogin">
+    <input type="text" name="username"/> <br/>
+    <input type="text" name="password"/> <br/>
+    <input type="submit" value="Login"/>
+</form>

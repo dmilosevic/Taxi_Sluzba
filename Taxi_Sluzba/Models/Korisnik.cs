@@ -8,6 +8,8 @@ namespace Taxi_Sluzba.Models
 {
     public abstract class Korisnik
     {
+        bool loggedIn = false;
+
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Ime { get; set; }
@@ -18,5 +20,13 @@ namespace Taxi_Sluzba.Models
         public string Email { get; set; }
         //uloga ??
         public List<Voznja> Voznje { get; set; }
+
+        public Uloge Uloga { get; set; }
+
+        public bool IsLoggedIn
+        {
+            get { return loggedIn; }
+            set { loggedIn = value; }
+        }
     }
 }

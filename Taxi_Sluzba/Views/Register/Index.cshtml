@@ -1,0 +1,18 @@
+﻿@model Taxi_Sluzba.Models.Musterija
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Registracija musterije</h2>
+<form method="post" action="Register/RegisterUser">
+    @Html.DisplayNameFor(model => model.UserName)
+    @Html.TextBoxFor(model => model.UserName)
+    <br/>
+    @Html.DisplayNameFor(model => model.Password)
+    @Html.TextBoxFor(model => model.Password)
+
+    Ostala polja bla bla...
+    <hr/>
+
+    <input type="submit" value="Register" />
+</form>
