@@ -7,7 +7,7 @@
 
 @Html.ActionLink("Reload i guess", "Login");
 
-<form method="post" action="Login/CheckLogin">
+<form method="post" action="@Url.Action("CheckLogin", "Login")">
     <input type="text" name="username"/> <br/>
     <input type="text" name="password"/> <br/>
     <input type="submit" value="Login"/>

@@ -1,0 +1,10 @@
+﻿@model Taxi_Sluzba.Models.Korisnik
+@{
+    ViewBag.Title = "AlreadyLoggedIn";
+}
+
+<h2>AlreadyLoggedIn</h2>
+
+<p>You are already logged in as @Model.UserName</p>
+<br/>
+<a href="/">Go to main screen</a> or @Html.ActionLink("Logout", "Logout")

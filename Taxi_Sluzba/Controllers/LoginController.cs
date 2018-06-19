@@ -12,6 +12,12 @@ namespace Taxi_Sluzba.Controllers
         // GET: Login
         public ActionResult Index()
         {
+            if(Session["user"] != null)
+            {
+                Korisnik k = Session["user"] as Korisnik;
+                if (k.IsLoggedIn)
+                    return View("AlreadyLoggedIn", k);
+            }
             return View("Login");
         }
 
@@ -31,7 +37,10 @@ namespace Taxi_Sluzba.Controllers
                 return View("Error");
 
             //successful login            
-            //vrati odgovarajuci VIEW u zavisnosti od uloge korisnika
+            Session["user"] = korisnik;
+            korisnik.IsLoggedIn = true;
+
+            //vrati odgovarajuci VIEW u zavisnosti od uloge korisnika            
             switch(korisnik.Uloga)
             {
                 case Enums.Uloge.Musterija: return View("~/Views/Main/MusterijaView.cshtml", korisnik);
@@ -39,6 +48,21 @@ namespace Taxi_Sluzba.Controllers
                 case Enums.Uloge.Dispecer: return View("~/Views/Main/DispecerView.cshtml", korisnik);
                 default: return View("Login");
             }
+        }
+
+        public ActionResult Logout()
+        {
+            Korisnik k = null;
+            k = Session["user"] as Korisnik;
+            if(k != null)
+            {
+                k.IsLoggedIn = false;
+                Session["user"] = null;
+            }
+            return View("~/Views/Login/Login.cshtml");
+           // return Index();
+            //Response.Redirect("~/Views/Login/Login.cshtml");
+
         }
     }
 }

@@ -155,6 +155,7 @@
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Register\Success.cshtml" />
     <Content Include="Views\Register\Error.cshtml" />
+    <Content Include="Views\Login\AlreadyLoggedIn.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
