@@ -3,16 +3,42 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Registracija musterije</h2>
-<form method="post" action="Register/RegisterUser">
-    @Html.DisplayNameFor(model => model.UserName)
-    @Html.TextBoxFor(model => model.UserName)
-    <br/>
-    @Html.DisplayNameFor(model => model.Password)
-    @Html.TextBoxFor(model => model.Password)
+<html>
+<body>
+    @using (Html.BeginForm("RegisterUser", "Register", FormMethod.Post))
+    {
+        @Html.DisplayNameFor(model => model.UserName)
+        @Html.TextBoxFor(model => model.UserName)
+        <br />
+        @Html.DisplayNameFor(model => model.Password)
+        @Html.TextBoxFor(model => model.Password)
+        <br />
+        @Html.DisplayNameFor(model => model.Ime)
+        @Html.TextBoxFor(model => model.Ime)
+        <br />
+        @Html.DisplayNameFor(model => model.Prezime)
+        @Html.TextBoxFor(model => model.Prezime)
+        <br />
+        @Html.DisplayNameFor(model => model.JMBG)
+        @Html.TextBoxFor(model => model.JMBG)
+        <br />
+        @Html.DisplayNameFor(model => model.Telefon)
+        @Html.TextBoxFor(model => model.Telefon)
+        <br />
+        @Html.DisplayNameFor(model => model.Email)
+        @Html.TextBoxFor(model => model.Email)
+        <br />
+        //@Html.DisplayNameFor(model => model.Pol)
+        <br/>
+        <span>Male</span>
+         @Html.RadioButtonFor(model => model.Pol, Taxi_Sluzba.Enums.Pol.MALE)
+        <span>Female</span>
+         @Html.RadioButtonFor(model => model.Pol, Taxi_Sluzba.Enums.Pol.FEMALE)
+            <hr />
 
-    Ostala polja bla bla...
-    <hr/>
+        <input type="submit" value="Register" />
+    }
+</body>
+</html>
 
-    <input type="submit" value="Register" />
-</form>
+

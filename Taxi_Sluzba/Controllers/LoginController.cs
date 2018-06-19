@@ -39,15 +39,8 @@ namespace Taxi_Sluzba.Controllers
             //successful login            
             Session["user"] = korisnik;
             korisnik.IsLoggedIn = true;
-
-            //vrati odgovarajuci VIEW u zavisnosti od uloge korisnika            
-            switch(korisnik.Uloga)
-            {
-                case Enums.Uloge.Musterija: return View("~/Views/Main/MusterijaView.cshtml", korisnik);
-                case Enums.Uloge.Vozac: return View("~/Views/Main/VozacView.cshtml", korisnik);
-                case Enums.Uloge.Dispecer: return View("~/Views/Main/DispecerView.cshtml", korisnik);
-                default: return View("Login");
-            }
+            
+            return View("~/Views/Main/Welcome.cshtml", korisnik);     
         }
 
         public ActionResult Logout()

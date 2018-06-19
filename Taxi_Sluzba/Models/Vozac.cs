@@ -10,5 +10,10 @@ namespace Taxi_Sluzba.Models
         public Lokacija Lokacija { get; set; }
         public Automobil Automobil { get; set; }
 
+        public Vozac() : base()
+        {
+            this.Uloga = Enums.Uloge.Vozac;
+        }
+
     }
 }

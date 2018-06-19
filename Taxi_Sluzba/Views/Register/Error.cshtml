@@ -1,4 +1,4 @@
-﻿
+﻿@model Taxi_Sluzba.Models.Korisnik
 @{
     ViewBag.Title = "Error";
 }
@@ -7,4 +7,11 @@
 
 <p>Nesto je poslo po zlu hehe</p>
 <br/>
+@{ 
+    if(Model != null)
+    {
+        <p>Korisnicko ime '@Model.UserName' je zauzeto. Pokusajte ponovo</p>
+        <br />
+    }
+}
 <a href="Index">Nazad</a>

@@ -7,5 +7,9 @@ namespace Taxi_Sluzba.Models
 {
     public class Musterija : Korisnik
     {
+        public Musterija() :base()
+        {
+            this.Uloga = Enums.Uloge.Musterija;
+        }
     }
 }

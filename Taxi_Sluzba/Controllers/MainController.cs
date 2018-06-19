@@ -17,5 +17,20 @@ namespace Taxi_Sluzba.Controllers
         {
             return View();
         }
+
+        public ActionResult Musterija()
+        {
+            return View("MusterijaView");
+        }
+        public ActionResult Vozac()
+        {
+            return View("VozacView");
+        }
+        public ActionResult Dispecer()
+        {
+            return View("DispecerView");
+        }
+
+
     }
 }
