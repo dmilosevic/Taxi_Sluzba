@@ -42,5 +42,10 @@ namespace Taxi_Sluzba
 
             HttpContext.Current.Application["korisnici"] = users;
         }
+
+        //dodato jer stackoverflow tako kaze i resava bag -.-
+        protected void Session_Start()
+        {
+        }
     }
 }
