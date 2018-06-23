@@ -1,7 +1,7 @@
 ﻿@using Taxi_Sluzba.Models
 @{
     ViewBag.Title = "DispecerView";
-    Korisnik user = Session["UserData"] as Korisnik;
+    Korisnik user = Session["User"] as Korisnik;
 }
 
 <h2>DispecerView</h2>
@@ -9,3 +9,6 @@
 <br />
 <p>Vi ste dispecer!</p>
 
+@Html.ActionLink("Moj profil", "ChangeUserData", "Main")
+<br />
+@Html.ActionLink("Logout", "Logout", "Login")

@@ -8,7 +8,7 @@ using Taxi_Sluzba.Enums;
 
 namespace Taxi_Sluzba.Models
 {
-    public abstract class Korisnik
+    public class Korisnik
     {
         bool loggedIn = false;
 
