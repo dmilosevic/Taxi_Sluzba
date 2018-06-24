@@ -1,44 +1,103 @@
 ﻿@model Taxi_Sluzba.Models.Musterija
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Register";
 }
 
-<html>
-<body>
-    @using (Html.BeginForm("RegisterUser", "Register", FormMethod.Post))
-    {
-        @Html.DisplayNameFor(model => model.UserName)
-        @Html.TextBoxFor(model => model.UserName)
-        <br />
-        @Html.DisplayNameFor(model => model.Password)
-        @Html.TextBoxFor(model => model.Password)
-        <br />
-        @Html.DisplayNameFor(model => model.Ime)
-        @Html.TextBoxFor(model => model.Ime)
-        <br />
-        @Html.DisplayNameFor(model => model.Prezime)
-        @Html.TextBoxFor(model => model.Prezime)
-        <br />
-        @Html.DisplayNameFor(model => model.JMBG)
-        @Html.TextBoxFor(model => model.JMBG)
-        <br />
-        @Html.DisplayNameFor(model => model.Telefon)
-        @Html.TextBoxFor(model => model.Telefon)
-        <br />
-        @Html.DisplayNameFor(model => model.Email)
-        @Html.TextBoxFor(model => model.Email)
-        <br />
-        //@Html.DisplayNameFor(model => model.Pol)
-        <br/>
-        <span>Male</span>
-         @Html.RadioButtonFor(model => model.Pol, Taxi_Sluzba.Enums.Pol.MALE)
-        <span>Female</span>
-         @Html.RadioButtonFor(model => model.Pol, Taxi_Sluzba.Enums.Pol.FEMALE)
-            <hr />
-
-        <input type="submit" value="Register" />
-    }
-</body>
-</html>
+<h2>Register user</h2>
 
 
+@using (Html.BeginForm("RegisterUser", "Register", FormMethod.Post)) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Musterija</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Ime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Prezime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prezime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prezime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.JMBG, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.JMBG, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.JMBG, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Telefon, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Telefon, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Telefon, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            
+            @Html.LabelFor(model => model.Pol, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Pol, Taxi_Sluzba.Enums.Pol.MALE) <span>Male</span>
+            </div>
+
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Pol, Taxi_Sluzba.Enums.Pol.FEMALE) <span>Female</span>
+            </div>
+                <hr />
+         </div>
+        
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to HomePage", "Index", "Home")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

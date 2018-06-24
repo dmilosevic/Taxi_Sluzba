@@ -157,11 +157,11 @@
     <Content Include="Views\Main\MusterijaView.cshtml" />
     <Content Include="Views\Main\DispecerView.cshtml" />
     <Content Include="Views\Main\VozacView.cshtml" />
-    <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Register\Success.cshtml" />
     <Content Include="Views\Register\Error.cshtml" />
     <Content Include="Views\Login\AlreadyLoggedIn.cshtml" />
     <Content Include="Views\Main\ChangeUserData.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
