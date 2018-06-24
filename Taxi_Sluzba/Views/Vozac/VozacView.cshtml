@@ -1,14 +1,17 @@
 ﻿@using Taxi_Sluzba.Models
+@model Taxi_Sluzba.Models.Vozac
 @{
     ViewBag.Title = "VozacView";
-    Korisnik user = Session["User"] as Korisnik;
+    //Korisnik user = Session["User"] as Korisnik;
 }
 
 <h2>VozacView</h2>
-<h4>Pozdrav @user.UserName</h4>
+<h4>Pozdrav @Model.UserName</h4>
 <br />
 <p>Vi ste Vozac!</p>
 
 @Html.ActionLink("Moj profil", "ChangeUserData", "Main")
+<br />
+@Html.ActionLink("Promeni lokaciju", "ChangeLocation")
 <br />
 @Html.ActionLink("Logout", "Logout", "Login")

@@ -21,19 +21,21 @@ namespace Taxi_Sluzba
             {
                 UserName = "Pera",
                 Password = "123",
-                Uloga = Enums.Uloge.Musterija,
+                //Uloga = Enums.Uloge.Musterija,
             };
             Korisnik k2 = new Dispecer()
             {
                 UserName = "Pekar",
                 Password = "123",
-                Uloga = Enums.Uloge.Dispecer,
+                //Uloga = Enums.Uloge.Dispecer,
             };
             Korisnik k3 = new Vozac()
             {
                 UserName = "Flojd",
                 Password = "123",
-                Uloga = Enums.Uloge.Vozac,
+                Ime="Dragan",
+                Prezime="Nikolic"
+                //Uloga = Enums.Uloge.Vozac,
             };
             users.Add(k1.UserName, k1);
             users.Add(k2.UserName, k2);

@@ -17,5 +17,10 @@ namespace Taxi_Sluzba.Models
             this.Y = Y;
             Adresa = adr;
         }
+
+        public Lokacija()
+        {
+
+        }
     }
 }

@@ -17,13 +17,33 @@ namespace Taxi_Sluzba.Controllers
         public ActionResult Welcome()
         {
             Korisnik k = Session["User"] as Korisnik;
-            return View(k);
+
+            if (k != null)
+            {
+                //vrati odgovarajuci VIEW u zavisnosti od uloge korisnika    
+                switch (k.Uloga)
+                {
+                    case Taxi_Sluzba.Enums.Uloge.Musterija:
+                        return RedirectToAction("Index", "Musterija");
+                        //return View("~/Musterija/MusterijaView");
+                    case Taxi_Sluzba.Enums.Uloge.Vozac:
+                        return RedirectToAction("Index", "Vozac");
+                        //return View("~/Vozac/VozacView");
+                    case Taxi_Sluzba.Enums.Uloge.Dispecer:
+                        return RedirectToAction("Index", "Dispecer");
+                       // return View("~/Dispecer/DispecerView");
+                    default:
+                        break;
+                }
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Musterija()
-        {
-            return View("MusterijaView");
-        }
+        //public ActionResult Musterija()
+        //{
+        //    return View("MusterijaView");
+        //}
         public ActionResult Vozac()
         {
             return View("VozacView");
@@ -64,6 +84,11 @@ namespace Taxi_Sluzba.Controllers
             B.Pol = A.Pol;
             B.Password = A.Password;
             B.JMBG = A.JMBG;
+        }
+
+        public ActionResult ChangeLocation()
+        {
+            return View();
         }
 
     }

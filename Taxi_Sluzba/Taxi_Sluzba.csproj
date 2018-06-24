@@ -119,10 +119,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DispecerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\MusterijaController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\VozacController.cs" />
     <Compile Include="Enums\Pol.cs" />
     <Compile Include="Enums\StatusVoznje.cs" />
     <Compile Include="Enums\TipAutomobila.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\NoDirectAccessAttribute.cs" />
     <Compile Include="Models\Adresa.cs" />
     <Compile Include="Models\Automobil.cs" />
     <Compile Include="Models\Dispecer.cs" />
@@ -153,15 +157,15 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\Error.cshtml" />
-    <Content Include="Views\Main\Welcome.cshtml" />
-    <Content Include="Views\Main\MusterijaView.cshtml" />
-    <Content Include="Views\Main\DispecerView.cshtml" />
-    <Content Include="Views\Main\VozacView.cshtml" />
+    <Content Include="Views\Musterija\MusterijaView.cshtml" />
+    <Content Include="Views\Dispecer\DispecerView.cshtml" />
+    <Content Include="Views\Vozac\VozacView.cshtml" />
     <Content Include="Views\Register\Success.cshtml" />
     <Content Include="Views\Register\Error.cshtml" />
     <Content Include="Views\Login\AlreadyLoggedIn.cshtml" />
     <Content Include="Views\Main\ChangeUserData.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
+    <Content Include="Views\Vozac\ChangeLocation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

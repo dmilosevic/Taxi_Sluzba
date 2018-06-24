@@ -12,10 +12,10 @@ namespace Taxi_Sluzba.Models
         public string Mesto { get; set; }
         public int PozivniBroj { get; set; }
 
-        //public Adresa()
-        //{
+        public Adresa()
+        {
 
-        //}
+        }
 
         public override string ToString()
         {

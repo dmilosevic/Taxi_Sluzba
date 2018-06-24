@@ -12,9 +12,9 @@ namespace Taxi_Sluzba.Controllers
         // GET: Login
         public ActionResult Index()
         {
-            if(Session["user"] != null)
+            if(Session["User"] != null)
             {
-                Korisnik k = Session["user"] as Korisnik;
+                Korisnik k = Session["User"] as Korisnik;
                 if (k.IsLoggedIn)
                     return View("AlreadyLoggedIn", k);
             }
@@ -37,20 +37,21 @@ namespace Taxi_Sluzba.Controllers
                 return View("Error");
 
             //successful login            
-            Session["user"] = korisnik;
+            Session["User"] = korisnik;
             korisnik.IsLoggedIn = true;
-            
-            return View("~/Views/Main/Welcome.cshtml", korisnik);     
+
+            return RedirectToAction("Welcome", "Main");
+            //return View("~/Views/Main/Welcome.cshtml", korisnik);     
         }
 
         public ActionResult Logout()
         {
             Korisnik k = null;
-            k = Session["user"] as Korisnik;
+            k = Session["User"] as Korisnik;
             if(k != null)
             {
                 k.IsLoggedIn = false;
-                Session["user"] = null;
+                Session["User"] = null;
             }
             return View("~/Views/Login/Login.cshtml");
            // return Index();
