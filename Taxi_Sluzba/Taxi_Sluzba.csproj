@@ -171,6 +171,8 @@
     <Content Include="Views\Musterija\Otkazi.cshtml" />
     <Content Include="Views\Musterija\Details.cshtml" />
     <Content Include="Views\Musterija\Izmeni.cshtml" />
+    <Content Include="Views\Dispecer\Details.cshtml" />
+    <Content Include="Views\Dispecer\ObradiVoznju.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,10 +9,12 @@ namespace Taxi_Sluzba.Models
     {
         public Lokacija Lokacija { get; set; }
         public Automobil Automobil { get; set; }
+        public bool IsAvailable { get; set; }
 
         public Vozac() : base()
         {
             this.Uloga = Enums.Uloge.Vozac;
+            IsAvailable = true;
 
             Random r = new Random();
             Lokacija = new Lokacija(r.Next(100), r.Next(100),

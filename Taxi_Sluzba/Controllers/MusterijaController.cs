@@ -41,6 +41,7 @@ namespace Taxi_Sluzba.Controllers
             return View("MusterijaView");
         }
 
+        [NoDirectAccess]
         public ActionResult OtkaziVoznju(string id)
         {
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
@@ -50,6 +51,7 @@ namespace Taxi_Sluzba.Controllers
             return View("Otkazi", voznja);//voznja);
         }
 
+        [NoDirectAccess]
         public ActionResult KomentarOstavljen(string id, string opis, int ocena)
         {
             Voznja voznja = (HttpContext.Application["voznje"] as Dictionary<string, Voznja>)[id];
@@ -64,6 +66,7 @@ namespace Taxi_Sluzba.Controllers
             return View("MusterijaView");
         }
 
+        [NoDirectAccess]
         public ActionResult Details(string id)
         {
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
@@ -72,6 +75,7 @@ namespace Taxi_Sluzba.Controllers
             return View(voznja);
         }
 
+        [NoDirectAccess]
         public ActionResult Izmeni(string id)
         {
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
@@ -80,6 +84,7 @@ namespace Taxi_Sluzba.Controllers
             return View(voznja);
         }
 
+        [NoDirectAccess]
         public ActionResult UpdateVoznjaData(Voznja v)
         {
             Voznja updated = (HttpContext.Application["voznje"] as Dictionary<string, Voznja>)[v.ID];
