@@ -37,12 +37,22 @@ namespace Taxi_Sluzba
                 Prezime="Nikolic"
                 //Uloga = Enums.Uloge.Vozac,
             };
+            Korisnik k4 = new Musterija()
+            {
+                UserName = "Danilo",
+                Password = "123",
+                //Uloga = Enums.Uloge.Vozac,
+            };
             users.Add(k1.UserName, k1);
             users.Add(k2.UserName, k2);
             users.Add(k3.UserName, k3);
-
+            users.Add(k4.UserName, k4);
 
             HttpContext.Current.Application["korisnici"] = users;
+
+            //Voznje baza podataka
+            Dictionary<string, Voznja> voznje = new Dictionary<string, Voznja>();
+            HttpContext.Current.Application["voznje"] = voznje;
         }
 
         //dodato jer stackoverflow tako kaze i resava bag -.-

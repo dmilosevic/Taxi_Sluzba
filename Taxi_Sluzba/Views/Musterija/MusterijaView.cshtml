@@ -2,13 +2,78 @@
 @{
     ViewBag.Title = "MusterijaView";
     Korisnik user = Session["User"] as Korisnik;
+    Dictionary<string, Voznja> voznje = HttpContext.Current.Application["voznje"] as Dictionary<string, Voznja>;
 }
 
+<html>
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/tableStyle.css"
+</head>
+
+<body>
 <h2>MusterijaView</h2>
 <h4>Pozdrav @user.UserName</h4>
-<br/>
+<br />
 <p>Vi ste musterija!</p>
+<hr />
+<table border="1" id="voznjeList">
+    <thead>
+        Vase voznje
+    </thead>
+    <tr>
+        <th>
+            Datum i vreme
+        </th>
+        <th>
+            Lokacija
+        </th>
+        <th>
+            Tip vozila
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Akcije
+        </th>
+    </tr>
+    @foreach (Voznja v in voznje.Values.Where(v => v.Musterija.UserName == user.UserName))
+    {
+        <tr>
+            <td>
+                @v.DatumIVreme.ToString()
+            </td>
+            <td>
+                @v.LokacijaMusterije.Adresa.ToString()
+            </td>
+            <td>
+                @v.TipAutomobila
+            </td>
+            <td>
+                @v.Status.ToString()
+            </td>
+            <td>
+                @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU)
+                {
+                    @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID });
+                }
+            </td>
+        </tr>
+    }
+</table>
+<hr />
+
+<a href="/Musterija/ZahtevVoznje">Kreiraj voznju</a>
+
+
+<hr />
 
 @Html.ActionLink("Moj profil", "ChangeUserData", "Main")
 <br />
 @Html.ActionLink("Logout", "Logout", "Login")
+
+
+</body>
+</html>
