@@ -44,7 +44,23 @@ namespace Taxi_Sluzba.Controllers
         public ActionResult OtkaziVoznju(string id)
         {
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
-            voznje.Remove(id);
+            Voznja voznja = voznje[id];
+            voznja.Status = Enums.StatusVoznje.OTKAZANA;
+
+            return View("Otkazi", voznja);//voznja);
+        }
+
+        public ActionResult KomentarOstavljen(string id, string opis, int ocena)
+        {
+            Voznja voznja = (HttpContext.Application["voznje"] as Dictionary<string, Voznja>)[id];
+            voznja.Komentar = new Komentar()
+            {
+                DatumObjave = DateTime.Now,
+                Korisnik = Session["User"] as Korisnik,
+                Ocena = ocena,
+                Opis = opis,
+                Voznja = voznja,                
+            };
             return View("MusterijaView");
         }
     }

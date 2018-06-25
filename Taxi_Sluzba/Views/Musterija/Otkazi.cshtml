@@ -1,0 +1,41 @@
+﻿@model Taxi_Sluzba.Models.Voznja
+@{
+    ViewBag.Title = "Otkazana voznja";
+}
+
+<h2>Komentar na otkazanu voznju</h2>
+
+<form method="post" action="@Url.Action("KomentarOstavljen", "Musterija")">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <input hidden="hidden" name="id" type="text" value="@Model.ID" />
+            <div class="col-md-10">
+                <textarea placeholder="Komentar" name="opis" rows="10" cols="30"></textarea> <br />
+                
+            </div>
+
+            <div class="col-md-10">
+
+                <input type="radio" id="0" value="0" name="ocena" checked />
+                <label for="0">0</label>
+                <input type="radio" id="1" value="1" name="ocena"  />
+                <label for="2">1</label>
+                <input type="radio" id="2" value="2" name="ocena" />
+                <label for="2">2</label>
+                <input type="radio" id="3" value="3" name="ocena" />
+                <label for="3">3</label>
+                <input type="radio" id="4" value="4" name="ocena" />
+                <label for="4">4</label>
+                <input type="radio" id="5" value="5" name="ocena"/>
+                <label for="5">5</label>
+            </div>            
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+</form>
