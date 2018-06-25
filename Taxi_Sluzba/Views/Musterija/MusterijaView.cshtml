@@ -58,7 +58,10 @@
                 @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
                 @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Dispecer == null)
                 {
+                    <span>|</span>
                     @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID })
+                    <span>|</span>
+                    @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
                 }
             </td>
         </tr>
