@@ -63,5 +63,13 @@ namespace Taxi_Sluzba.Controllers
             };
             return View("MusterijaView");
         }
+
+        public ActionResult Details(string id)
+        {
+            Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
+            Voznja voznja = voznje[id];
+
+            return View(voznja);
+        }
     }
 }

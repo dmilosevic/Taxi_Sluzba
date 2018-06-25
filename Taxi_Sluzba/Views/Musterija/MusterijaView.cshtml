@@ -55,9 +55,10 @@
                 @v.Status.ToString()
             </td>
             <td>
+                @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
                 @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU)
                 {
-                    @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID });
+                    @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID })
                 }
             </td>
         </tr>

@@ -11,5 +11,10 @@ namespace Taxi_Sluzba.Models
         {
             this.Uloga = Enums.Uloge.Musterija;
         }
+
+        public override string ToString()
+        {
+            return UserName + ", " + Ime;
+        }
     }
 }

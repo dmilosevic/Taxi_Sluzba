@@ -169,6 +169,7 @@
     <Content Include="Views\Vozac\ChangeLocation.cshtml" />
     <Content Include="Views\Musterija\ZahtevVoznje.cshtml" />
     <Content Include="Views\Musterija\Otkazi.cshtml" />
+    <Content Include="Views\Musterija\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
