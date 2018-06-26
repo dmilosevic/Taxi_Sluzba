@@ -37,8 +37,8 @@ namespace Taxi_Sluzba.Controllers
 
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
             voznje.Add(voznja.ID, voznja);
-            
-            return View("MusterijaView");
+
+            return RedirectToAction("Index");
         }
 
         [NoDirectAccess]
@@ -63,7 +63,7 @@ namespace Taxi_Sluzba.Controllers
                 Opis = opis,
                 Voznja = voznja,                
             };
-            return View("MusterijaView");
+            return RedirectToAction("Index");
         }
 
         [NoDirectAccess]
@@ -91,7 +91,7 @@ namespace Taxi_Sluzba.Controllers
             updated.TipAutomobila = v.TipAutomobila;
             updated.LokacijaMusterije.Adresa = v.LokacijaMusterije.Adresa;
 
-            return View("MusterijaView");
+            return RedirectToAction("Index");
         }
     }
 }

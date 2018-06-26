@@ -8,6 +8,9 @@
 <div>
     <h4>Voznja</h4>
     <hr />
+    <h3 style="color:red">@Html.DisplayNameFor(model => model.Status)<br />
+        @Html.DisplayFor(model => model.Status)
+    </h3>
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.DatumIVreme)
@@ -40,7 +43,13 @@
         <dd>
             @Html.DisplayFor(model => model.Komentar.Opis)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Vozac)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.Vozac.UserName)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.TipAutomobila)
         </dt>

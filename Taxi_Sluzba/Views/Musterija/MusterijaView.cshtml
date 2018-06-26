@@ -39,7 +39,7 @@
             Akcije
         </th>
     </tr>
-    @foreach (Voznja v in voznje.Values.Where(v => v.Musterija.UserName == user.UserName))
+    @foreach (Voznja v in voznje.Values.Where(v => v.Musterija != null && v.Musterija.UserName == user.UserName))
     {
         <tr>
             <td>

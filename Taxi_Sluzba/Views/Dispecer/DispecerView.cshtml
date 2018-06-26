@@ -66,8 +66,8 @@
                         {
                             <span>|</span>
                             @Html.ActionLink("Obradi", "ObradiVoznju", new { id = v.ID })
-                            <span>|</span>
-                            @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
+                            @*<span>|</span>
+                            @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })*@
                         }
                     </td>
                 </tr>
@@ -92,9 +92,6 @@
                     Status
                 </th>
                 <th>
-                    Musterija
-                </th>
-                <th>
                     Akcije
                 </th>
             </tr>
@@ -114,22 +111,19 @@
                         @v.Status.ToString()
                     </td>
                     <td>
-                        @v.Musterija.UserName
-                    </td>
-                    <td>
                         @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
-                        @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Dispecer == null)
+                        @*@if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Dispecer == null)
                         {
                             <span>|</span>
                                 @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID })
                                 <span>|</span>
                                 @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
-                        }
+                        }*@
                     </td>
                 </tr>
             }
         </table>
-
+    @Html.ActionLink("Formiraj novu voznju", "FormirajVoznju", "Dispecer")
     <hr />
     @Html.ActionLink("Moj profil", "ChangeUserData", "Main")
     <br />

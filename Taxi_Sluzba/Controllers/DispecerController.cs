@@ -39,10 +39,41 @@ namespace Taxi_Sluzba.Controllers
         {
             Voznja updated = (HttpContext.Application["voznje"] as Dictionary<string, Voznja>)[v.ID];
             updated.Vozac = v.Vozac;
+
+            zauzmiVozaca(v.Vozac.UserName);
+
             updated.Status = Enums.StatusVoznje.OBRADJENA;
             updated.Dispecer = Session["User"] as Dispecer;
 
-            return View("DispecerView");
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult FormirajVoznju()
+        {
+            return View();
+        }
+
+        public ActionResult FormiranaVoznja(Voznja voznja)
+        {
+            voznja.DatumIVreme = DateTime.Now;
+            voznja.ID = voznja.DatumIVreme.GetHashCode().ToString();
+            voznja.Status = Enums.StatusVoznje.FORMIRANA;
+            voznja.Dispecer = Session["User"] as Dispecer;
+
+            zauzmiVozaca(voznja.Vozac.UserName);
+
+            Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
+            voznje.Add(voznja.ID, voznja);
+
+            return RedirectToAction("Index");
+        }
+
+        private void zauzmiVozaca(string vozacUserName)
+        {
+            Dictionary<string, Korisnik> korisnici = HttpContext.Application["korisnici"] as Dictionary<string, Korisnik>;
+
+            Vozac vozac = korisnici[vozacUserName] as Vozac;
+            vozac.IsAvailable = false;
         }
     }
 }

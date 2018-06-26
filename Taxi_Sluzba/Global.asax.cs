@@ -43,10 +43,18 @@ namespace Taxi_Sluzba
                 Password = "123",
                 //Uloga = Enums.Uloge.Vozac,
             };
+            Korisnik k5 = new Vozac()
+            {
+                UserName = "Soferdzija",
+                Password = "123",
+                Ime="Kristijan",
+                Prezime = "Dolanc"
+            };
             users.Add(k1.UserName, k1);
             users.Add(k2.UserName, k2);
             users.Add(k3.UserName, k3);
             users.Add(k4.UserName, k4);
+            users.Add(k5.UserName, k5);
 
             HttpContext.Current.Application["korisnici"] = users;
 
