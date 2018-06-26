@@ -46,6 +46,7 @@ namespace Taxi_Sluzba.Controllers
             B.Lokacija = A.Lokacija;
         }
 
+        [NoDirectAccess]
         public ActionResult PreuzmiVoznju(string id)
         {
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
@@ -59,6 +60,7 @@ namespace Taxi_Sluzba.Controllers
             return RedirectToAction("Index");
         }
 
+        [NoDirectAccess]
         public ActionResult ZavrsiVoznju(string id)
         {
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
@@ -67,6 +69,7 @@ namespace Taxi_Sluzba.Controllers
             return View(voznja);
         }
 
+        [NoDirectAccess]
         public ActionResult VoznjaZavrsena(Voznja v)
         {
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
@@ -86,6 +89,16 @@ namespace Taxi_Sluzba.Controllers
             Helpers.Functions.OslobodiVozaca(voznja.Vozac.UserName);
 
             return RedirectToAction("Index");
+        }
+
+        //Potpuno isti kontroler kao i za musteriju sa postpuno istim pogledom, ostavljeno u slucaju da vozac ima veci uvid u podatke od musterije
+        [NoDirectAccess]
+        public ActionResult Details(string id)
+        {
+            Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
+            Voznja voznja = voznje[id];
+
+            return View(voznja);
         }
 
         

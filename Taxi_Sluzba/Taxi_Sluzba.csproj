@@ -177,6 +177,7 @@
     <Content Include="Views\Dispecer\ObradiVoznju.cshtml" />
     <Content Include="Views\Dispecer\FormirajVoznju.cshtml" />
     <Content Include="Views\Vozac\ZavrsiVoznju.cshtml" />
+    <Content Include="Views\Vozac\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

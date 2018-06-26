@@ -94,6 +94,7 @@ namespace Taxi_Sluzba.Controllers
             return RedirectToAction("Index");
         }
 
+        [NoDirectAccess]
         public ActionResult KomentarNaVoznju(Voznja v)
         {
             Voznja updated = (HttpContext.Application["voznje"] as Dictionary<string, Voznja>)[v.ID];
