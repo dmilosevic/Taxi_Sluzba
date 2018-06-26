@@ -65,7 +65,7 @@
                     @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
                     <span>|</span>
                 }
-                @if(v.Status == Taxi_Sluzba.Enums.StatusVoznje.USPESNA)
+                @if(v.Status == Taxi_Sluzba.Enums.StatusVoznje.USPESNA && v.Komentar == null)
                 {
                     @Html.ActionLink("Komentarisi", "KomentarNaVoznju", new { id = v.ID })
                     <span>|</span>
