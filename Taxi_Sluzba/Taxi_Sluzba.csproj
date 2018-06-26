@@ -134,6 +134,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Functions.cs" />
     <Compile Include="Helpers\NoDirectAccessAttribute.cs" />
     <Compile Include="Models\Adresa.cs" />
     <Compile Include="Models\Automobil.cs" />
@@ -174,6 +175,7 @@
     <Content Include="Views\Dispecer\Details.cshtml" />
     <Content Include="Views\Dispecer\ObradiVoznju.cshtml" />
     <Content Include="Views\Dispecer\FormirajVoznju.cshtml" />
+    <Content Include="Views\Vozac\ZavrsiVoznju.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

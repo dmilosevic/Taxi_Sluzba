@@ -93,5 +93,11 @@ namespace Taxi_Sluzba.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult KomentarNaVoznju(Voznja v)
+        {
+            Voznja updated = (HttpContext.Application["voznje"] as Dictionary<string, Voznja>)[v.ID];
+            return View("Otkazi", updated); //promeniti ime View-a sa otkazi na nesto tipa "komentarisanje"
+        }
     }
 }

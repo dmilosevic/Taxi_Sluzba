@@ -12,5 +12,14 @@ namespace Taxi_Sluzba.Models
         public Korisnik Korisnik { get; set; }
         public Voznja Voznja { get; set; }
         public int Ocena { get; set; }
+
+        public Komentar(string opis)
+        {
+            Opis = opis;
+        }
+
+        public Komentar()
+        {
+        }
     }
 }

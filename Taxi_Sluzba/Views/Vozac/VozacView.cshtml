@@ -3,15 +3,130 @@
 @{
     ViewBag.Title = "VozacView";
     //Korisnik user = Session["User"] as Korisnik;
+    Dictionary<string, Voznja> voznje = HttpContext.Current.Application["voznje"] as Dictionary<string, Voznja>;
 }
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/tableStyle.css" />
+</head>
 
+<body>
 <h2>VozacView</h2>
 <h4>Pozdrav @Model.UserName</h4>
 <br />
 <p>Vi ste Vozac!</p>
+<hr />
 
+<table border="1" id="voznjeList">
+    <thead>
+        Moje voznje
+    </thead>
+    <tr>
+        <th>
+            Datum i vreme
+        </th>
+        <th>
+            Lokacija
+        </th>
+        <th>
+            Tip vozila
+        </th>
+        <th>
+            Status
+        </th>
+        @*<th>
+            Musterija
+        </th>*@
+        <th>
+            Akcije
+        </th>
+    </tr>
+    @foreach (Voznja v in voznje.Values.Where(v => (v.Vozac != null && v.Vozac.UserName == Model.UserName)))
+            {
+        <tr>
+            <td>
+                @v.DatumIVreme.ToString()
+            </td>
+            <td>
+                @v.LokacijaMusterije.Adresa.ToString()
+            </td>
+            <td>
+                @v.TipAutomobila.ToString()
+            </td>
+            <td>
+                @v.Status.ToString()
+            </td>
+            @*<td>
+                @v.Musterija.UserName
+            </td>*@
+            <td>
+                @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
+                @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.OBRADJENA || v.Status == Taxi_Sluzba.Enums.StatusVoznje.PRIHVACENA || v.Status == Taxi_Sluzba.Enums.StatusVoznje.FORMIRANA)
+                {
+                    <span>|</span>
+                    @Html.ActionLink("Zavrsi", "ZavrsiVoznju", new { id = v.ID })
+                }
+            </td>
+        </tr>
+    }
+</table>
+<hr />
+<table border="1" id="voznjeList">
+    <thead>
+        Ostale voznje
+    </thead>
+    <tr>
+        <th>
+            Datum i vreme
+        </th>
+        <th>
+            Lokacija
+        </th>
+        <th>
+            Tip Vozila
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            Akcije
+        </th>
+    </tr>
+    @foreach (Voznja v in voznje.Values.Where(v => v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU))
+    {
+        <tr>
+            <td>
+                @v.DatumIVreme.ToString()
+            </td>
+            <td>
+                @v.LokacijaMusterije.Adresa.ToString()
+            </td>
+            <td>
+                @v.TipAutomobila.ToString()
+            </td>
+            <td>
+                @v.Status.ToString()
+            </td>
+            <td>
+                @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
+                @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Vozac == null)
+                {
+                    <span>|</span>
+                    @Html.ActionLink("Preuzmi", "PreuzmiVoznju", new { id = v.ID })
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<hr />
 @Html.ActionLink("Moj profil", "ChangeUserData", "Main")
 <br />
 @Html.ActionLink("Promeni lokaciju", "ChangeLocation")
 <br />
 @Html.ActionLink("Logout", "Logout", "Login")
+</body>
+
+</html>

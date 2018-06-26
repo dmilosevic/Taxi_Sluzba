@@ -20,7 +20,7 @@
     <hr />
         <table border="1" id="voznjeList">
             <thead>
-                Nove voznje
+                Moje voznje
             </thead>
             <tr>
                 <th>
@@ -35,14 +35,14 @@
                 <th>
                     Status
                 </th>
-                <th>
+                @*<th>
                     Musterija
-                </th>
+                </th>*@
                 <th>
                     Akcije
                 </th>
             </tr>
-            @foreach (Voznja v in voznje.Values.Where(v => v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU))
+            @foreach (Voznja v in voznje.Values.Where(v => (v.Dispecer != null && v.Dispecer.UserName == user.UserName)))
             {
                 <tr>
                     <td>
@@ -57,17 +57,17 @@
                     <td>
                         @v.Status.ToString()
                     </td>
-                    <td>
+                    @*<td>
                         @v.Musterija.UserName
-                    </td>
+                    </td>*@
                     <td>
                         @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
                         @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Vozac == null)
                         {
                             <span>|</span>
                             @Html.ActionLink("Obradi", "ObradiVoznju", new { id = v.ID })
-                            @*<span>|</span>
-                            @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })*@
+                            <span>|</span>
+                            @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
                         }
                     </td>
                 </tr>
@@ -95,7 +95,7 @@
                     Akcije
                 </th>
             </tr>
-            @foreach (Voznja v in voznje.Values.Where(v => v.Status != Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU))
+            @foreach (Voznja v in voznje.Values.Where(v => (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU) || v.Dispecer == null || v.Dispecer.UserName != user.UserName))
                 {
                 <tr>
                     <td>
@@ -112,13 +112,11 @@
                     </td>
                     <td>
                         @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
-                        @*@if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Dispecer == null)
+                        @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Vozac == null)
                         {
                             <span>|</span>
-                                @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID })
-                                <span>|</span>
-                                @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
-                        }*@
+                            @Html.ActionLink("Obradi", "ObradiVoznju", new { id = v.ID })
+                        }
                     </td>
                 </tr>
             }

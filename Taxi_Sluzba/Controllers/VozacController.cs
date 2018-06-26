@@ -18,12 +18,14 @@ namespace Taxi_Sluzba.Controllers
             return View("VozacView", vozac);
         }
 
+        [NoDirectAccess]
         public ActionResult ChangeLocation()
         {
             Vozac vozac = Session["User"] as Vozac;
             return View("ChangeLocation", vozac);
         }
 
+        [NoDirectAccess]
         [HttpPost]
         public ActionResult ApplyChanges(Vozac v)
         {
@@ -42,11 +44,42 @@ namespace Taxi_Sluzba.Controllers
             B = Session["User"] as Vozac;
 
             B.Lokacija = A.Lokacija;
-            //B = A.Ime;
-            //B.Prezime = A.Prezime;
-            //B.Pol = A.Pol;
-            //B.Password = A.Password;
-            //B.JMBG = A.JMBG;
         }
+
+        //public ActionResult PreuzmiVoznju(string id)
+        //{
+
+        //}
+
+        public ActionResult ZavrsiVoznju(string id)
+        {
+            Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
+            Voznja voznja = voznje[id];
+
+            return View(voznja);
+        }
+
+        public ActionResult VoznjaZavrsena(Voznja v)
+        {
+            Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
+            Voznja voznja = voznje[v.ID];
+            
+            voznja.Status = v.Status;
+            if(voznja.Status == Enums.StatusVoznje.USPESNA)
+            {
+                voznja.Odrediste = new Lokacija(0, 0, v.Odrediste.Adresa);
+                voznja.Iznos = v.Iznos;
+            }
+            else if(voznja.Status == Enums.StatusVoznje.NEUSPESNA)
+            {
+                voznja.Komentar = new Komentar(v.Komentar.Opis);
+            }
+
+            Helpers.Functions.OslobodiVozaca(voznja.Vozac.UserName);
+
+            return RedirectToAction("Index");
+        }
+
+        
     }
 }

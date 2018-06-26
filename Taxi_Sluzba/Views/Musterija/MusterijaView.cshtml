@@ -55,13 +55,20 @@
                 @v.Status.ToString()
             </td>
             <td>
+                <span>|</span>
                 @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
+                <span>|</span>
                 @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Dispecer == null)
                 {
-                    <span>|</span>
                     @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID })
                     <span>|</span>
                     @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
+                    <span>|</span>
+                }
+                @if(v.Status == Taxi_Sluzba.Enums.StatusVoznje.USPESNA)
+                {
+                    @Html.ActionLink("Komentarisi", "KomentarNaVoznju", new { id = v.ID })
+                    <span>|</span>
                 }
             </td>
         </tr>

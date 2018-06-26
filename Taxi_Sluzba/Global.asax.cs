@@ -60,6 +60,13 @@ namespace Taxi_Sluzba
 
             //Voznje baza podataka
             Dictionary<string, Voznja> voznje = new Dictionary<string, Voznja>();
+            //voznje.Add("12", new Voznja()
+            //{
+            //    ID = "12",
+            //    Status = Enums.StatusVoznje.FORMIRANA,
+            //    Vozac = k3 as Vozac,
+            //    LokacijaMusterije = new Lokacija(10, 10, new Adresa()),
+            //});
             HttpContext.Current.Application["voznje"] = voznje;
         }
 
