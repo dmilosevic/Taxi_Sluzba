@@ -46,10 +46,18 @@ namespace Taxi_Sluzba.Controllers
             B.Lokacija = A.Lokacija;
         }
 
-        //public ActionResult PreuzmiVoznju(string id)
-        //{
+        public ActionResult PreuzmiVoznju(string id)
+        {
+            Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
+            Voznja voznja = voznje[id];
+            
+            
+            voznja.Vozac = Session["User"] as Vozac;
+            voznja.Status = Enums.StatusVoznje.PRIHVACENA;
+            Helpers.Functions.ZauzmiVozaca(voznja.Vozac.UserName);
 
-        //}
+            return RedirectToAction("Index");
+        }
 
         public ActionResult ZavrsiVoznju(string id)
         {
