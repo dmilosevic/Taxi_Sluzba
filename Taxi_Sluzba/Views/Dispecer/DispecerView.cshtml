@@ -1,7 +1,8 @@
 ﻿@using Taxi_Sluzba.Models
+@model Taxi_Sluzba.ViewModel.KorisnikVoznjeVM
 @{
     ViewBag.Title = "DispecerView";
-    Korisnik user = Session["User"] as Korisnik;
+    //Korisnik user = Session["User"] as Korisnik;
     Dictionary<string, Voznja> voznje = HttpContext.Current.Application["voznje"] as Dictionary<string, Voznja>;
 }
 
@@ -10,18 +11,44 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="~/Content/tableStyle.css" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            function updateView() {
+                var selectedFilter = jQuery("#cbxFilter option:selected").text();
+                var selectedSorting = jQuery("#cbxSort option:selected").text();
+                window.location.href = "/Dispecer/Index?filter=" + selectedFilter + "&sort=" + selectedSorting;
+            }
+
+            $('#cbxFilter').on('change', updateView);
+            $('#cbxSort').on('change', updateView);
+        });
+    </script>
 </head>
 
 <body>
     <h2>DispecerView</h2>
-    <h4>Pozdrav @user.UserName</h4>
+    <h4>Pozdrav @Model.Korisnik.UserName</h4>
     <br />
     <p>Vi ste dispecer!</p>
     <hr />
+    @{
+        SelectList statusKodovi = new SelectList(new List<string>() {
+            "ALL", "KREIRANA_NA_CEKANJU","FORMIRANA", "PRIHVACENA", "OBRADJENA", "NEUSPESNA", "USPESNA",
+
+        }, Model.Status);
+
+        SelectList sortOptions = new SelectList(new List<string>()
+        {
+            "Datum", "Ocena",
+        });
+    }
+    <div id="tableDIV">
+        <div style="float:left">
+            Moje voznje
+        </div>        
         <table border="1" id="voznjeList">
-            <thead>
-                Moje voznje
-            </thead>
             <tr>
                 <th>
                     Datum i vreme
@@ -36,13 +63,13 @@
                     Status
                 </th>
                 @*<th>
-                    Musterija
-                </th>*@
+                        Musterija
+                    </th>*@
                 <th>
                     Akcije
                 </th>
             </tr>
-            @foreach (Voznja v in voznje.Values.Where(v => (v.Dispecer != null && v.Dispecer.UserName == user.UserName)))
+            @foreach (Voznja v in voznje.Values.Where(v => (v.Dispecer != null && v.Dispecer.UserName == Model.Korisnik.UserName)))
             {
                 <tr>
                     <td>
@@ -58,8 +85,8 @@
                         @v.Status.ToString()
                     </td>
                     @*<td>
-                        @v.Musterija.UserName
-                    </td>*@
+                            @v.Musterija.UserName
+                        </td>*@
                     <td>
                         @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
                         @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Vozac == null)
@@ -73,11 +100,19 @@
                 </tr>
             }
         </table>
+    </div>
     <hr />
+    <div>
+        <div style="float:left">
+            Ostale voznje
+        </div> 
+        <div style="float:right">
+            Filter @Html.DropDownList("filter", statusKodovi, null, new { id = "cbxFilter" })
+        </div>
+        <div style="float:right">
+            Sort by @Html.DropDownList("sort", sortOptions, null, new { id = "cbxSort" })
+        </div>
         <table border="1" id="voznjeList">
-            <thead>
-                Ostale voznje
-            </thead>
             <tr>
                 <th>
                     Datum i vreme
@@ -92,11 +127,14 @@
                     Status
                 </th>
                 <th>
+                    Ocena
+                </th>
+                <th>
                     Akcije
                 </th>
             </tr>
-            @foreach (Voznja v in voznje.Values.Where(v => (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU) || v.Dispecer == null || v.Dispecer.UserName != user.UserName))
-                {
+            @foreach (Voznja v in Model.Voznje.Where(v => (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU) || v.Dispecer == null || v.Dispecer.UserName != Model.Korisnik.UserName))
+            {
                 <tr>
                     <td>
                         @v.DatumIVreme.ToString()
@@ -111,6 +149,9 @@
                         @v.Status.ToString()
                     </td>
                     <td>
+                        @v.Komentar.Ocena
+                    </td>
+                    <td>
                         @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
                         @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Vozac == null)
                         {
@@ -121,6 +162,8 @@
                 </tr>
             }
         </table>
+    </div>
+
     @Html.ActionLink("Formiraj novu voznju", "FormirajVoznju", "Dispecer")
     <hr />
     @Html.ActionLink("Moj profil", "ChangeUserData", "Main")

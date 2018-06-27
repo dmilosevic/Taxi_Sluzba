@@ -147,6 +147,7 @@
     <Compile Include="Models\Vozac.cs" />
     <Compile Include="Models\Voznja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\KorisnikVoznjeVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

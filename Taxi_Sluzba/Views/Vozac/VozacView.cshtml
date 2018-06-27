@@ -1,5 +1,6 @@
 ﻿@using Taxi_Sluzba.Models
-@model Taxi_Sluzba.Models.Vozac
+@using Taxi_Sluzba.Enums
+@model Taxi_Sluzba.ViewModel.KorisnikVoznjeVM
 @{
     ViewBag.Title = "VozacView";
     //Korisnik user = Session["User"] as Korisnik;
@@ -8,68 +9,101 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="~/Content/tableStyle.css" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            function updateView() {
+                var selectedFilter = jQuery("#cbxFilter option:selected").text();
+                var selectedSorting = jQuery("#cbxSort option:selected").text();
+                window.location.href = "/Vozac/Index?filter=" + selectedFilter + "&sort=" + selectedSorting;
+            }
+
+            $('#cbxFilter').on('change', updateView);
+            $('#cbxSort').on('change', updateView);
+        });
+    </script>
 </head>
 
 <body>
 <h2>VozacView</h2>
-<h4>Pozdrav @Model.UserName</h4>
+<h4>Pozdrav @Model.Korisnik.UserName</h4>
 <br />
 <p>Vi ste Vozac!</p>
 <hr />
+    @{ 
+        SelectList statusKodovi = new SelectList(new List<string>() {
+            "ALL", "FORMIRANA", "PRIHVACENA", "OBRADJENA", "NEUSPESNA", "USPESNA",
 
-<table border="1" id="voznjeList">
-    <thead>
-        Moje voznje
-    </thead>
-    <tr>
-        <th>
-            Datum i vreme
-        </th>
-        <th>
-            Lokacija
-        </th>
-        <th>
-            Tip vozila
-        </th>
-        <th>
-            Status
-        </th>
-        @*<th>
-            Musterija
-        </th>*@
-        <th>
-            Akcije
-        </th>
-    </tr>
-    @foreach (Voznja v in voznje.Values.Where(v => (v.Vozac != null && v.Vozac.UserName == Model.UserName)))
-            {
-        <tr>
-            <td>
-                @v.DatumIVreme.ToString()
-            </td>
-            <td>
-                @v.LokacijaMusterije.Adresa.ToString()
-            </td>
-            <td>
-                @v.TipAutomobila.ToString()
-            </td>
-            <td>
-                @v.Status.ToString()
-            </td>
-            @*<td>
-                @v.Musterija.UserName
-            </td>*@
-            <td>
-                @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
-                @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.OBRADJENA || v.Status == Taxi_Sluzba.Enums.StatusVoznje.PRIHVACENA || v.Status == Taxi_Sluzba.Enums.StatusVoznje.FORMIRANA)
-                {
-                    <span>|</span>
-                    @Html.ActionLink("Zavrsi", "ZavrsiVoznju", new { id = v.ID })
-                }
-            </td>
-        </tr>
+        }, Model.Status);
+
+        SelectList sortOptions = new SelectList(new List<string>()
+        {
+            "Datum", "Ocena",
+        });
     }
-</table>
+    <div id="tableDIV">
+        <div style="float:left">
+            Moje voznje
+        </div>
+        <div style="float:right">
+           Filter @Html.DropDownList("filter", statusKodovi, null, new { id = "cbxFilter" })
+        </div>
+        <div style="float:right">
+            Sort by @Html.DropDownList("sort", sortOptions, null, new { id = "cbxSort" })
+        </div>
+
+        <table border="1" id="voznjeList">
+            <tr>
+                <th>
+                    Datum i vreme
+                </th>
+                <th>
+                    Lokacija
+                </th>
+                <th>
+                    Tip vozila
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Ocena
+                </th>
+                <th>
+                    Akcije
+                </th>
+            </tr>
+            @foreach (Voznja v in Model.Voznje.Where(v => (v.Vozac != null && v.Vozac.UserName == Model.Korisnik.UserName)))
+            {
+                <tr>
+                    <td>
+                        @v.DatumIVreme.ToString()
+                    </td>
+                    <td>
+                        @v.LokacijaMusterije.Adresa.ToString()
+                    </td>
+                    <td>
+                        @v.TipAutomobila.ToString()
+                    </td>
+                    <td>
+                        @v.Status.ToString()
+                    </td>
+                    <td>
+                          @(v.Komentar != null ? @v.Komentar.Ocena : 0)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
+                        @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.OBRADJENA || v.Status == Taxi_Sluzba.Enums.StatusVoznje.PRIHVACENA || v.Status == Taxi_Sluzba.Enums.StatusVoznje.FORMIRANA)
+                {
+                            <span>|</span>
+                            @Html.ActionLink("Zavrsi", "ZavrsiVoznju", new { id = v.ID })
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
 <hr />
 <table border="1" id="voznjeList">
     <thead>

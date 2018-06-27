@@ -1,8 +1,9 @@
 ﻿@using Taxi_Sluzba.Models
+@model Taxi_Sluzba.ViewModel.KorisnikVoznjeVM
 @{
     ViewBag.Title = "MusterijaView";
-    Korisnik user = Session["User"] as Korisnik;
-    Dictionary<string, Voznja> voznje = HttpContext.Current.Application["voznje"] as Dictionary<string, Voznja>;
+    //Korisnik user = Session["User"] as Korisnik;
+    //Dictionary<string, Voznja> voznje = HttpContext.Current.Application["voznje"] as Dictionary<string, Voznja>;
 }
 
 <html>
@@ -10,80 +11,120 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="~/Content/tableStyle.css" />
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            function updateView() {
+                var selectedFilter = jQuery("#cbxFilter option:selected").text();
+                var selectedSorting = jQuery("#cbxSort option:selected").text();
+                window.location.href = "/Musterija/Index?filter=" + selectedFilter + "&sort=" + selectedSorting;
+            }
+
+            $('#cbxFilter').on('change', updateView);
+            $('#cbxSort').on('change', updateView);
+        });
+    </script>
 </head>
 
 <body>
 <h2>MusterijaView</h2>
-<h4>Pozdrav @user.UserName</h4>
+<h4>Pozdrav @Model.Korisnik.UserName</h4>
 <br />
 <p>Vi ste musterija!</p>
 <hr />
-<table border="1" id="voznjeList">
-    <thead>
-        Vase voznje
-    </thead>
-    <tr>
-        <th>
-            Datum i vreme
-        </th>
-        <th>
-            Lokacija
-        </th>
-        <th>
-            Tip vozila
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Akcije
-        </th>
-    </tr>
-    @foreach (Voznja v in voznje.Values.Where(v => v.Musterija != null && v.Musterija.UserName == user.UserName))
-    {
-        <tr>
-            <td>
-                @v.DatumIVreme.ToString()
-            </td>
-            <td>
-                @v.LokacijaMusterije.Adresa.ToString()
-            </td>
-            <td>
-                @v.TipAutomobila
-            </td>
-            <td>
-                @v.Status.ToString()
-            </td>
-            <td>
-                <span>|</span>
-                @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
-                <span>|</span>
-                @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Dispecer == null)
-                {
-                    @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID })
-                    <span>|</span>
-                    @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
-                    <span>|</span>
-                }
-                @if(v.Status == Taxi_Sluzba.Enums.StatusVoznje.USPESNA && v.Komentar == null)
-                {
-                    @Html.ActionLink("Komentarisi", "KomentarNaVoznju", new { id = v.ID })
-                    <span>|</span>
-                }
-            </td>
-        </tr>
+    @{
+        SelectList statusKodovi = new SelectList(new List<string>() {
+            "ALL", "KREIRANA_NA_CEKANJU", "PRIHVACENA", "OBRADJENA", "NEUSPESNA", "USPESNA",
+
+        }, Model.Status);
+
+        SelectList sortOptions = new SelectList(new List<string>()
+        {
+            "Datum", "Ocena",
+        });
     }
-</table>
-<hr />
+    <div id="tableDIV">
+        <div style="float:left">
+            Moje voznje
+        </div>
+        <div style="float:right">
+            Filter @Html.DropDownList("filter", statusKodovi, null, new { id = "cbxFilter" })
+        </div>
+        <div style="float:right">
+            Sort by @Html.DropDownList("sort", sortOptions, null, new { id = "cbxSort" })
+        </div>
+        <table border="1" id="voznjeList">
+            <tr>
+                <th>
+                    Datum i vreme
+                </th>
+                <th>
+                    Lokacija
+                </th>
+                <th>
+                    Tip vozila
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Ocena
+                </th>
+                <th>
+                    Akcije
+                </th>
+            </tr>
+            @foreach (Voznja v in Model.Voznje.Where(v => v.Musterija != null && v.Musterija.UserName == Model.Korisnik.UserName))
+            {
+                <tr>
+                    <td>
+                        @v.DatumIVreme.ToString()
+                    </td>
+                    <td>
+                        @v.LokacijaMusterije.Adresa.ToString()
+                    </td>
+                    <td>
+                        @v.TipAutomobila
+                    </td>
+                    <td>
+                        @v.Status.ToString()
+                    </td>
+                    <td>
+                        @v.Komentar.Ocena
+                    </td>
 
-<a href="/Musterija/ZahtevVoznje">Kreiraj voznju</a>
+                    <td>
+                        <span>|</span>
+                        @Html.ActionLink("Detaljnije", "Details", new { id = v.ID })
+                        <span>|</span>
+                        @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.KREIRANA_NA_CEKANJU && v.Dispecer == null)
+                {
+                            @Html.ActionLink("Otkazi", "OtkaziVoznju", new { id = v.ID })
+                            <span>|</span>
+                            @Html.ActionLink("Izmeni", "Izmeni", new { id = v.ID })
+                            <span>|</span>
+                        }
+                        @if (v.Status == Taxi_Sluzba.Enums.StatusVoznje.USPESNA && v.Komentar.Opis == string.Empty)
+                        {
+                            @Html.ActionLink("Komentarisi", "KomentarNaVoznju", new { id = v.ID })
+                            <span>|</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+        <hr />
+
+        <a href="/Musterija/ZahtevVoznje">Kreiraj voznju</a>
 
 
-<hr />
+        <hr />
 
-@Html.ActionLink("Moj profil", "ChangeUserData", "Main")
-<br />
-@Html.ActionLink("Logout", "Logout", "Login")
+        @Html.ActionLink("Moj profil", "ChangeUserData", "Main")
+        <br />
+        @Html.ActionLink("Logout", "Logout", "Login")
 
 
 </body>

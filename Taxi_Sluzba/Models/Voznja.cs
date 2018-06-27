@@ -21,7 +21,7 @@ namespace Taxi_Sluzba.Models
         public Dispecer Dispecer { get; set; }
         public Vozac Vozac { get; set; }
         public double Iznos { get; set; }
-        public Komentar Komentar { get; set; }
+        public Komentar Komentar { get; set; } = new Komentar();
         public StatusVoznje Status { get; set; }
 
     }

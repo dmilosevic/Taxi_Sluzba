@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Taxi_Sluzba.Models;
+using Taxi_Sluzba.ViewModel;
 
 namespace Taxi_Sluzba.Controllers
 {
@@ -11,9 +12,31 @@ namespace Taxi_Sluzba.Controllers
     {
         // GET: Musterija
         [NoDirectAccess]
-        public ActionResult Index()
+        public ActionResult Index(string filter, string sort)
         {
-            return View("MusterijaView");
+            Musterija musterija = Session["User"] as Musterija;
+            string filterMode = filter;
+            var voz = from s in (HttpContext.Application["voznje"] as Dictionary<string, Voznja>).Values
+                      select s;
+
+            if (filter != null)
+                voz = Helpers.Functions.GetFilteredData(voz, filter);
+            else
+                filter = "";
+
+            if (sort != null)
+                voz = Helpers.Functions.GetSortedData(voz, sort);
+            else
+                sort = "";
+
+            KorisnikVoznjeVM model = new KorisnikVoznjeVM()
+            {
+                Korisnik = musterija,
+                Voznje = voz,
+                Status = filterMode,
+            };
+
+            return View("MusterijaView", model);
         }
 
         [NoDirectAccess]
