@@ -12,5 +12,8 @@ namespace Taxi_Sluzba.ViewModel
         public Korisnik Korisnik { get; set; }
         public IEnumerable<Voznja> Voznje { get; set; }
         public string Status { get; set; }
+
+        //za pretrazivanje voznji po parametrima
+        public PretragaVM PretragaDetails { get; set; }
     }
 }

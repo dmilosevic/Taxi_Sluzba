@@ -105,6 +105,7 @@
     <Content Include="Content\tableStyle.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Helpers\dispeceri.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -116,7 +117,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="TextFile1.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +135,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DataAccess.cs" />
     <Compile Include="Helpers\Functions.cs" />
     <Compile Include="Helpers\NoDirectAccessAttribute.cs" />
     <Compile Include="Models\Adresa.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Models\Voznja.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\KorisnikVoznjeVM.cs" />
+    <Compile Include="ViewModel\PretragaVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -179,6 +181,7 @@
     <Content Include="Views\Dispecer\FormirajVoznju.cshtml" />
     <Content Include="Views\Vozac\ZavrsiVoznju.cshtml" />
     <Content Include="Views\Vozac\Details.cshtml" />
+    <Content Include="Views\Main\Pretraga.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

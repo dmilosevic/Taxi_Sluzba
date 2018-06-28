@@ -166,6 +166,9 @@
 
     @Html.ActionLink("Formiraj novu voznju", "FormirajVoznju", "Dispecer")
     <hr />
+    <br />
+    <a href="/Main/Pretraga?userID=@Model.Korisnik.UserName">Pretrazi voznje</a>
+    <br />
     @Html.ActionLink("Moj profil", "ChangeUserData", "Main")
     <br />
     @Html.ActionLink("Logout", "Logout", "Login")

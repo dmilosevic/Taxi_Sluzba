@@ -76,8 +76,10 @@ namespace Taxi_Sluzba.Controllers
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
             Voznja voznja = voznje[id];
             
-            
-            voznja.Vozac = Session["User"] as Vozac;
+            Vozac vozac = Session["User"] as Vozac;
+            voznja.Vozac = vozac;
+            vozac.Voznje.Add(voznja);
+
             voznja.Status = Enums.StatusVoznje.PRIHVACENA;
             Helpers.Functions.ZauzmiVozaca(voznja.Vozac.UserName);
 

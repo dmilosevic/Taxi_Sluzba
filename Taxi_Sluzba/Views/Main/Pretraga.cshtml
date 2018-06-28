@@ -1,0 +1,122 @@
+﻿@model Taxi_Sluzba.ViewModel.KorisnikVoznjeVM
+@using Taxi_Sluzba.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" type="text/css" href="~/Content/tableStyle.css" />
+    <title>Pretraga</title>
+</head>
+<body>
+    <div id="tableDIV">
+        @using (@Html.BeginForm("Pretrazi", "Main", FormMethod.Post))
+        {
+            @Html.HiddenFor(model => model.Korisnik.UserName)
+            <div class="form-group">
+            @Html.LabelFor(model => model.PretragaDetails.DatumStart, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PretragaDetails.DatumStart, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PretragaDetails.DatumStart, "", new { @class = "text-danger" })
+            </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PretragaDetails.DatumEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PretragaDetails.DatumEnd, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PretragaDetails.DatumEnd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PretragaDetails.OcenaStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PretragaDetails.OcenaStart, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.ValidationMessageFor(model => model.PretragaDetails.OcenaStart, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PretragaDetails.OcenaEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PretragaDetails.OcenaEnd, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.ValidationMessageFor(model => model.PretragaDetails.OcenaEnd, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PretragaDetails.CenaStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PretragaDetails.CenaStart, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.ValidationMessageFor(model => model.PretragaDetails.CenaStart, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PretragaDetails.CenaEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PretragaDetails.CenaEnd, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.ValidationMessageFor(model => model.PretragaDetails.CenaEnd, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Pretrazi" class="btn btn-default" />
+                </div>
+            </div>
+        }
+        <table border="1" id="voznjeList">
+            <tr>
+                <th>
+                    Datum i vreme
+                </th>
+                <th>
+                    Lokacija
+                </th>
+                <th>
+                    Tip vozila
+                </th>
+                <th>
+                    Cena voznje
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Ocena
+                </th>
+            </tr>
+            @foreach (Voznja v in Model.Voznje)
+            {
+                <tr>
+                    <td>
+                        @v.DatumIVreme.ToString()
+                    </td>
+                    <td>
+                        @v.LokacijaMusterije.Adresa.ToString()
+                    </td>
+                    <td>
+                        @v.TipAutomobila
+                    </td>
+                    <td>
+                        @v.Iznos
+                    </td>
+                    <td>
+                        @v.Status.ToString()
+                    </td>
+                    <td>
+                        @v.Komentar.Ocena
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <hr />
+    <a href="/Main/Welcome">Go back</a>
+</body>
+</html>

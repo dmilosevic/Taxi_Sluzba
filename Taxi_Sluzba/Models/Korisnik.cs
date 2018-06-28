@@ -39,7 +39,7 @@ namespace Taxi_Sluzba.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        public List<Voznja> Voznje { get; set; }
+        public List<Voznja> Voznje { get; set; } = new List<Voznja>();
 
         public Uloge Uloga { get; set; }
 

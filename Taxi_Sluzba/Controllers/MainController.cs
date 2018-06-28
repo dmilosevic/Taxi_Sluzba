@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Taxi_Sluzba.Models;
+using Taxi_Sluzba.ViewModel;
 
 namespace Taxi_Sluzba.Controllers
 {
@@ -25,13 +26,10 @@ namespace Taxi_Sluzba.Controllers
                 {
                     case Taxi_Sluzba.Enums.Uloge.Musterija:
                         return RedirectToAction("Index", "Musterija");
-                        //return View("~/Musterija/MusterijaView");
                     case Taxi_Sluzba.Enums.Uloge.Vozac:
                         return RedirectToAction("Index", "Vozac");
-                        //return View("~/Vozac/VozacView");
                     case Taxi_Sluzba.Enums.Uloge.Dispecer:
                         return RedirectToAction("Index", "Dispecer");
-                       // return View("~/Dispecer/DispecerView");
                     default:
                         break;
                 }
@@ -39,11 +37,6 @@ namespace Taxi_Sluzba.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        //public ActionResult Musterija()
-        //{
-        //    return View("MusterijaView");
-        //}
         public ActionResult Vozac()
         {
             return View("VozacView");
@@ -62,7 +55,7 @@ namespace Taxi_Sluzba.Controllers
         [HttpPost]
         public ActionResult UpdateChanges(Korisnik k)
         {
-            Korisnik updated; //Session["User"] as Korisnik;
+            Korisnik updated;
 
             CopyData(ref k, out updated);
             Session["User"] = updated;
@@ -91,5 +84,81 @@ namespace Taxi_Sluzba.Controllers
             return View();
         }
 
+        public ActionResult Pretraga(string userID)
+        {
+            Korisnik kor = (HttpContext.Application["korisnici"] as Dictionary<string, Korisnik>)[userID];
+            KorisnikVoznjeVM model = new KorisnikVoznjeVM()
+            {
+                Korisnik = kor,
+                Voznje = kor.Voznje,
+            };
+            return View(model);
+        }
+
+        public ActionResult Pretrazi(KorisnikVoznjeVM model)
+        {
+            Korisnik kor = (HttpContext.Application["korisnici"] as Dictionary<string, Korisnik>)[model.Korisnik.UserName];
+            IEnumerable<Voznja> voz = kor.Voznje;
+
+            #region filteri
+            //datum
+            if(model.PretragaDetails.DatumStart != null)
+            {
+                if(model.PretragaDetails.DatumEnd != null)
+                {
+                    voz = voz.Where(v => (v.DatumIVreme >= model.PretragaDetails.DatumStart && v.DatumIVreme <= model.PretragaDetails.DatumEnd));
+                }
+                else
+                {
+                    voz = voz.Where(v => v.DatumIVreme >= model.PretragaDetails.DatumStart);
+                }
+            }
+            else if(model.PretragaDetails.DatumEnd != null)
+            {
+                voz = voz.Where(v => v.DatumIVreme <= model.PretragaDetails.DatumEnd);
+            }
+
+            //cena
+            if(model.PretragaDetails.CenaStart != 0)
+            {
+                if(model.PretragaDetails.CenaEnd != 0)
+                {
+                    voz = voz.Where(v => v.Iznos >= model.PretragaDetails.CenaStart && v.Iznos <= model.PretragaDetails.CenaEnd);
+                }
+                else
+                {
+                    voz = voz.Where(v => v.Iznos >= model.PretragaDetails.CenaStart);
+                }
+            }
+            else if(model.PretragaDetails.CenaEnd != 0)
+            {
+                voz = voz.Where(v => v.Iznos <= model.PretragaDetails.CenaEnd);
+            }
+
+            //ocena
+            if (model.PretragaDetails.OcenaStart != 0)
+            {
+                if (model.PretragaDetails.OcenaEnd != 0)
+                {
+                    voz = voz.Where(v => v.Komentar.Ocena >= model.PretragaDetails.OcenaStart && v.Komentar.Ocena <= model.PretragaDetails.OcenaEnd);
+                }
+                else
+                {
+                    voz = voz.Where(v => v.Komentar.Ocena >= model.PretragaDetails.OcenaStart);
+                }
+            }
+            else if (model.PretragaDetails.OcenaEnd != 0)
+            {
+                voz = voz.Where(v => v.Komentar.Ocena <= model.PretragaDetails.OcenaEnd);
+            }
+            #endregion
+
+            KorisnikVoznjeVM filtered = new KorisnikVoznjeVM()
+            {
+                Korisnik = kor,
+                Voznje = voz,
+            };
+            return View("Pretraga", filtered);
+        }
     }
 }

@@ -47,16 +47,14 @@ namespace Taxi_Sluzba.Controllers
 
         [NoDirectAccess]
         public ActionResult KreirajVoznju(Voznja voznja)
-        {
-            /*
-             * OVDE JE PROBLEM VALIDACIJA
-             * UPISUJE VOZNJE IAKO SU SVI PODACI OSTAVLJENI PRAZNI
-             * SREDI TAJ BAG NA KRAJU
-             * */
+        {            
             voznja.DatumIVreme = DateTime.Now;
             voznja.ID = voznja.DatumIVreme.GetHashCode().ToString();
             voznja.Status = Enums.StatusVoznje.KREIRANA_NA_CEKANJU;
-            voznja.Musterija = Session["User"] as Musterija;
+            Musterija musterija = Session["User"] as Musterija;
+
+            voznja.Musterija = musterija;
+            musterija.Voznje.Add(voznja);
 
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
             voznje.Add(voznja.ID, voznja);

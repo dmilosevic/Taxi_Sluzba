@@ -61,12 +61,17 @@ namespace Taxi_Sluzba.Controllers
         public ActionResult VoznjaObradjena(Voznja v)
         {
             Voznja updated = (HttpContext.Application["voznje"] as Dictionary<string, Voznja>)[v.ID];
+
+            Vozac vozac = ((HttpContext.Application["korisnici"] as Dictionary<string, Korisnik>)[v.Vozac.UserName] as Vozac);
+            vozac.Voznje.Add(updated);
             updated.Vozac = v.Vozac;
 
             Helpers.Functions.ZauzmiVozaca(v.Vozac.UserName);
 
             updated.Status = Enums.StatusVoznje.OBRADJENA;
-            updated.Dispecer = Session["User"] as Dispecer;
+            Dispecer disp = Session["User"] as Dispecer;
+            updated.Dispecer = disp;
+            disp.Voznje.Add(updated);
 
             return RedirectToAction("Index");
         }
@@ -83,9 +88,14 @@ namespace Taxi_Sluzba.Controllers
             voznja.DatumIVreme = DateTime.Now;
             voznja.ID = voznja.DatumIVreme.GetHashCode().ToString();
             voznja.Status = Enums.StatusVoznje.FORMIRANA;
-            voznja.Dispecer = Session["User"] as Dispecer;
+            Dispecer disp = Session["User"] as Dispecer;
+            voznja.Dispecer = disp;
+            disp.Voznje.Add(voznja);
 
-            Helpers.Functions.ZauzmiVozaca(voznja.Vozac.UserName);
+            Vozac vozac = ((HttpContext.Application["korisnici"] as Dictionary<string, Korisnik>)[voznja.Vozac.UserName] as Vozac);
+            vozac.Voznje.Add(voznja);
+
+            Helpers.Functions.ZauzmiVozaca(vozac.UserName);
 
             Dictionary<string, Voznja> voznje = HttpContext.Application["voznje"] as Dictionary<string, Voznja>;
             voznje.Add(voznja.ID, voznja);
