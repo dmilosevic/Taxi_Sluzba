@@ -64,7 +64,7 @@ namespace Taxi_Sluzba.Controllers
             korisnici[k.UserName] = updated;
            
 
-            return View("Welcome", k);
+            return RedirectToAction("Welcome");
         }
 
         private void CopyData(ref Korisnik A, out Korisnik B)
